@@ -53,7 +53,7 @@ router.post('/',(req, res)=>{
        !req.params.id.toString().match(/^[0-9]{3,}$/g)){
        
        res.status(400);
-       res.json({message: "Bad Request1"});
+       res.json({message: "Bad Request"});
     } else {
        //Gets us the index of movie with given id.
        var updateIndex = games.map((game)=>{
