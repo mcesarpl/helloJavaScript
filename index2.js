@@ -34,7 +34,7 @@ app.use(cookieParser());
 
 app.post('/person', (req, res)=>{
     console.log("Entrei no Post");
-    var personInfo = req.body; //Get the parsed information
+    let personInfo = req.body; //Get the parsed information
     
     if(!personInfo.name || !personInfo.age || !personInfo.nationality){
        res.render('show_message', {
