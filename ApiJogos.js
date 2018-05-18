@@ -4,7 +4,7 @@ let multer = require('multer');
 let upload = multer();
 let server = express();
 let games = require('./games.js');
-let mongoose = require('mongoose');
+//let mongoose = require('mongoose');
 
 server.use(express.static('publicGames'));
 server.use(bodyParser.json());
@@ -12,7 +12,7 @@ server.use(bodyParser.urlencoded({extended: true}));
 server.use(upload.array());
 server.use('/games',games);
 
-mongoose.connect('mongodb://localhost/db_games');
+/*mongoose.connect('mongodb://localhost/db_games');
 
 let gameSchema = mongoose.Schema({
     name : String,
@@ -21,7 +21,7 @@ let gameSchema = mongoose.Schema({
 });
 
 let Game = mongoose.model("Game",gameSchema);
-
+*/
 server.listen(5001,()=>{
     console.log('GamesServer is listening.');
 });
