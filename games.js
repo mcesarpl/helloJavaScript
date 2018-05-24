@@ -22,13 +22,14 @@ let Game = mongoose.model("Game",gameSchema);
 
 let saveInBanc = (gameInfo,res)=>{ //recebe req.body
     if(!gameInfo.id||!gameInfo.name || !gameInfo.year || !gameInfo.rating){
-        res.json({message: "Sorry, you provided worng info", type: "error"});
+        res.json({message: "Sorry, you provided wrong info", type: "error"});
     }else{
         Game.findOne({id: gameInfo.id},(err,response)=>{
             if(err) {
                 res.json({message: "Sorry, a database could not be used. Try again.", type: "error"});
             }else{
-                if(!(response==[])){
+                if((!(response===[]))&&(response!=null)){
+                    console.log(response);
                     res.json({message:"Sorry, you provided a already existent id",type:"error"});
                 }else{
                     let newGame = new Game({
@@ -44,6 +45,7 @@ let saveInBanc = (gameInfo,res)=>{ //recebe req.body
                         }
                         else{
                             res.json({message: "New game added!", type: "success", game: gameInfo});
+                            console.log("Entry in POST : \nNew game added : " + gameInfo.name);
                         }   
                     });
                 }
@@ -53,38 +55,13 @@ let saveInBanc = (gameInfo,res)=>{ //recebe req.body
     }
 }
 
-//função para salvar game no banco
-/*
-let saveInBanc = (gameInfo,res)=>{ //recebe req.body
-    if(!gameInfo.id||!gameInfo.name || !gameInfo.year || !gameInfo.rating){
-       res.json({message: "Sorry, you provided worng info", type: "error"});
-    } else {
-        let newGame = new Game({
-            id: gameInfo.id,
-            name: gameInfo.name,
-            year: gameInfo.year,
-            rating: gameInfo.rating
-         });
-
-         newGame.save((err, Game)=>{
-            if(err){
-              res.json({message: "Database error", type: "error"});
-            }
-            else{
-                res.json({message: "New game added!", type: "success", game: gameInfo});
-            }   
-        });
-    }
-}
-*/
-
 //retorna todos os jogos 
 router.get('/',(req,res)=>{
     Game.find((err, response)=>{
         if(err) {
             console.log(err)
         } else {
-            console.log(response)
+            console.log("Entry in GET : \n" + response);
             res.json(response);
         }
      });
@@ -110,47 +87,13 @@ router.get('/:id([0-9]{3,})',(req,res)=>{
 
 //cria novo game para e adiciona no array
 router.post('/',(req, res)=>{
+        let a = JSON.parse(req.body)
+        console.log(a.id);
+        console.log(req.body.name);
+        console.log(req.body.year);
+        console.log(req.body.rating);
     saveInBanc(req.body,res);
  });
-
-//se existir o id passado, altera o game no array, se não cria um novo game 
-// router.put('/:id([0-9]{3,})', (req, res)=>{
-//     //Check if all fields are provided and are valid:
-//     if(!req.body.name ||
-//        !req.body.year.toString().match(/^[0-9]{4}$/g) ||
-//        !req.body.rating.toString().match(/^[0-9]\.[0-9]$/g) ||
-//        !req.params.id.toString().match(/^[0-9]{3,}$/g)){
-       
-//        res.status(400);
-//        res.json({message: "Bad Request"});
-//     } else {
-//        //Gets us the index of movie with given id.
-//        var updateIndex = games.map((game)=>{
-//           return game.id;
-//        }).indexOf(parseInt(req.params.id));
-       
-//        if(updateIndex === -1){
-//           //Movie not found, create new
-//           games.push({
-//              id: req.params.id,
-//              name: req.body.name,
-//              year: req.body.year,
-//              rating: req.body.rating
-//           });
-//           res.json({message: "New game created.", location: "/games/" + req.params.id});
-//        } else {
-//           //Update existing movie
-//           games[updateIndex] = {
-//              id: req.params.id,
-//              name: req.body.name,
-//              year: req.body.year,
-//              rating: req.body.rating
-//           };
-//           res.json({message: "Game id " + req.params.id + " updated.", 
-//              location: "/games/" + req.params.id});
-//        }
-//     }
-// });
 
 router.put('/:id([0-9]{3,})', (req, res)=>{
     //Check if all fields are provided and are valid:
@@ -174,19 +117,6 @@ router.put('/:id([0-9]{3,})', (req, res)=>{
     }
 });
 
-// //remove o objeto passado no id
-// router.delete('/:id([0-9]{3,})', (req, res)=>{
-//     let removeIndex = games.map((game)=>{
-//        return game.id;
-//     }).indexOf(parseInt(req.params.id));
-    
-//     if(removeIndex === -1){
-//        res.json({message: "Not found"});
-//     } else {
-//        games.splice(removeIndex, 1);
-//        res.send({message: "Game id " + req.params.id + " removed."});
-//     }
-//  });
 
 //remove o objeto passado no id
 router.delete('/:id([0-9]{3,})', (req, res)=>{
@@ -194,7 +124,12 @@ router.delete('/:id([0-9]{3,})', (req, res)=>{
         if(err){
             res.json({message: "Sorry, a database could not be used. Try again.", type: "error"});
         }else{
-            res.json({message: "Game removed."});
+            if((response===[])||(response===null)){
+                res.json({message:"Game Id not found. Try another."});
+            }else{
+                res.json({message: "Game removed."});
+            }
+            
         }
     });
  });
