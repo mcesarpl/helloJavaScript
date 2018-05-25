@@ -2,10 +2,10 @@
 let XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 let request = new XMLHttpRequest();
 let method = 'GET'
-let url = 'http://localhost:5001/games/';
+let url = 'http://10.102.20.207:5000/movies/';
 //Abre uma nova conecção usando requisição GET na URL
 
-// //request para todos os jogos no server
+//request para todos os jogos no server
 // console.log('Requisição para todos os games :');
 // request.open(method,url,true);
 
@@ -21,7 +21,9 @@ let url = 'http://localhost:5001/games/';
     
 // }
 
-// request.send();
+//  request.send();
+
+
 // //request para um jogo em espesifico
 // console.log('Requisição apenas para o game 102 :');
 // let url1 = 'http://localhost:5001/games/102';
@@ -58,23 +60,27 @@ let url = 'http://localhost:5001/games/';
 //request para POST de um jogo especifico
 console.log('Requisição para post de um jogo especifico : ');
 let request3 = new XMLHttpRequest();
-let params = "id=105&name=Zelda&year=1987&rating=9.8";
-// let FormData = require('formdata');
-// let params = new FormData();
-// params.append("id",105);
-// params.append("name","Zelda");
-// params.append("year",1987);
-// params.append("rating",9.8);
+
+let data = {};
+//data.id =106;
+data.name="3D";
+data.year=2013;
+data.rating=9.4;
+
+let json = JSON.stringify(data);
+
 request3.open("POST",url,true);
 
-request3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-// request3.setRequestHeader("Content-length",params.length);
-// request3.setRequestHeader("Connection","close");
-
-request3.onreadystatechange = ()=>{
-    if(request3.readyState == 4 && request3.status == 200){
-        console.log(request3.responseText);
-    }
+request3.setRequestHeader('Content-type','application/json; charset=utf-8');
+request3.onload = function () {
+    let users = JSON.parse(request3.responseText);
+    console.log(this.readyState + ' ' + this.status);
 }
+//let tent1 = JSON.stringify({ id: '108', name: 'Uncharted', year: '2012', rating: '9.0' });
+//let tent2 = {"id":106,"name":"3D","year":2013,"rating":9.4};
 
-request3.send(params);
+
+//console.log(json);
+
+request3.send(json);
+

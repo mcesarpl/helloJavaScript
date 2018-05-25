@@ -87,11 +87,7 @@ router.get('/:id([0-9]{3,})',(req,res)=>{
 
 //cria novo game para e adiciona no array
 router.post('/',(req, res)=>{
-        let a = JSON.parse(req.body)
-        console.log(a.id);
-        console.log(req.body.name);
-        console.log(req.body.year);
-        console.log(req.body.rating);
+    console.log(req.body);
     saveInBanc(req.body,res);
  });
 
