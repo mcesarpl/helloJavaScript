@@ -29,7 +29,7 @@ let saveInBanc = (gameInfo,res)=>{ //recebe req.body
                 res.json({message: "Sorry, a database could not be used. Try again.", type: "error"});
             }else{
                 if((!(response===[]))&&(response!=null)){
-                    console.log(response);
+                    //console.log(response);
                     res.json({message:"Sorry, you provided a already existent id",type:"error"});
                 }else{
                     let newGame = new Game({
@@ -93,6 +93,7 @@ router.post('/',(req, res)=>{
 
 router.put('/:id([0-9]{3,})', (req, res)=>{
     //Check if all fields are provided and are valid:
+    console.log('IN PUT : ');
     if(!req.body.name ||
        !req.body.year.toString().match(/^[0-9]{4}$/g) ||
        !req.body.rating.toString().match(/^[0-9]\.[0-9]$/g) ||
@@ -106,8 +107,12 @@ router.put('/:id([0-9]{3,})', (req, res)=>{
             if(err){
                 res.json({message: "Sorry, a database could not be used. Try again.", type: "error"});
             }else{
-                res.json(response);
+                if(response!=null){
+                    res.json({message:'Game sucessfully updated!', id: response.id, name: response.name});
+                }else{
+                    saveInBanc(req.body,res);
                 }
+            }
     
             });
     }
