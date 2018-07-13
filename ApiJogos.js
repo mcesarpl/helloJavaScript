@@ -4,6 +4,7 @@ let multer = require('multer');
 let upload = multer();
 let server = express();
 let games = require('./games.js');
+let authrote = require('./authrote/authrote.js');
 //let mongoose = require('mongoose');
 
 server.use(express.static('publicGames'));
@@ -11,6 +12,7 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(upload.array());
 server.use('/games',games);
+server.use('/auth',authrote);
 
 /*mongoose.connect('mongodb://localhost/db_games');
 
@@ -37,4 +39,4 @@ server.get('*',(req,res)=>{
 
 //Using Pug as a templating endine for Express
 server.set('view engine','pug');
-server.set('views','./views');
+server.set('views','/home/mateus/helloJavaScript/helloJavaScript/views');
