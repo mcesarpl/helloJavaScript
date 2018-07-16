@@ -85,7 +85,7 @@ router.get('/:id([0-9]{3,})',(req,res)=>{
 
 });
 
-//cria novo game para e adiciona no array
+//cria novo game e adiciona no banco
 router.post('/',(req, res)=>{
     console.log(req.body);
     saveInBanc(req.body,res);
