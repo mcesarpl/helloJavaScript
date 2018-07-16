@@ -25,7 +25,7 @@ let gameSchema = mongoose.Schema({
 let Game = mongoose.model("Game",gameSchema);
 */
 server.listen(5001,()=>{
-    console.log('GamesServer is listening.');
+    console.log('GamesServer is listening on port 5001.');
 });
 
 server.get('/',(req,res)=>{
@@ -39,4 +39,4 @@ server.get('*',(req,res)=>{
 
 //Using Pug as a templating endine for Express
 server.set('view engine','pug');
-server.set('views','/home/mateus/helloJavaScript/helloJavaScript/views');
+server.set('views','C:/Users/mateu/Dropbox/testauth/helloJavaScript/views');
