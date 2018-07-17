@@ -8,7 +8,7 @@ let mongoose = require('mongoose');
     {id:104, name:"Metroid", year:1986, rating:9.1}
 ];*/
 
-mongoose.connect('mongodb://localhost:27017/db_games');
+mongoose.connect('mongodb://localhost:27017/db_games',{ useNewUrlParser: true });
 
 let gameSchema = mongoose.Schema({
     id: Number,

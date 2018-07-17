@@ -2,31 +2,37 @@ const
     router = require('express').Router();
     let mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/db_user');
+mongoose.connect('mongodb://localhost:27017/db_user', { useNewUrlParser: true });
 
 
 let userSchema = mongoose.Schema({
-    name : String,
-    password : String
+    username : String,
+    password : String,
+    grant_type : String,
+    client_id : String,
+    client_secret : String
 });
     
 let User = mongoose.model("User", userSchema);
 
 let saveInBanc = (userInfo,res)=>{ //recebe req.body
-    if(!userInfo.name || !userInfo.password){
-        res.json({message: "Sorry, you provided invalid name or password.", type: "error"});
+    if(!userInfo.username || !userInfo.password || !userInfo.grant_type){
+        res.json({message: "Sorry, you provided invalid username, password or granttype", type: "error"});
     }else{
-        User.findOne({name : userInfo.id},(err,response)=>{
+        User.findOne({username : userInfo.username},(err,response)=>{
             if(err) {
                 res.json({message: "Sorry, a database could not be used. Try again.", type: "error"});
             }else{
                 if((!(response===[]))&&(response!=null)){
                     //console.log(response);
-                    res.json({message:"Sorry, you provided a already existent name.",type:"error"});
+                    res.json({message:"Sorry, you provided a already existent username.",type:"error"});
                 }else{
                     let newUser = new User({
-                        name : userInfo.name,
-                        password : userInfo.password
+                        username : userInfo.username,
+                        password : userInfo.password,
+                        grant_type : userInfo.grant_type,
+                        client_id : userInfo.client_id,
+                        client_secret : userInfo.client_secret
                      });
             
                      newUser.save((err, User)=>{
@@ -35,7 +41,7 @@ let saveInBanc = (userInfo,res)=>{ //recebe req.body
                             res.json({message: "Database error", type: "error"});
                         }
                         else{
-                            res.json({message: "New User added!", type: "success", game: userInfo});
+                            res.json({message: "New User added!", type: "success", user : userInfo});
                             console.log("Entry in POST : \nNew User added : " + userInfo.name);
                         }   
                     });
