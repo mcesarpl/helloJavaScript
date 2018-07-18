@@ -1,6 +1,9 @@
-let express = require('express');
-let router = express.Router();
-let mongoose = require('mongoose');
+let
+    express = require('express');
+    router = express.Router();
+    mongoose = require('mongoose');
+    log = require("./winstonlogrote/log.js");
+
 /*let games = [
     {id:101, name:"Street Fighter", year:1998, rating:9.1},
     {id:102, name:"Grand Theft Auto", year:1997, rating:9.0},
@@ -61,7 +64,7 @@ router.get('/',(req,res)=>{
         if(err) {
             console.log(err)
         } else {
-            console.log("Entry in GET : \n" + response);
+            console.log("In GET : \n" + response);
             res.json(response);
         }
      });
@@ -89,6 +92,7 @@ router.get('/:id([0-9]{3,})',(req,res)=>{
 router.post('/',(req, res)=>{
     console.log(req.body);
     saveInBanc(req.body,res);
+    log.logger.info('In Post saved : '+ req.body.name);
  });
 
 router.put('/:id([0-9]{3,})', (req, res)=>{

@@ -42,7 +42,7 @@ let saveInBanc = (userInfo,res)=>{ //recebe req.body
                         }
                         else{
                             res.json({message: "New User added!", type: "success", user : userInfo});
-                            console.log("Entry in POST : \nNew User added : " + userInfo.name);
+                            console.log("In POST : \nNew User added : " + userInfo.name);
                         }   
                     });
                 }
@@ -67,7 +67,7 @@ router.get('/',(req,res)=>{
         if(err) {
             console.log(err)
         } else {
-            console.log("Entry in GET : \n" + response);
+            console.log("In GET : \n" + response);
             res.json(response);
         }
      });
