@@ -1,30 +1,34 @@
 'use strict';
 const
-    winston = require('winston'),
+    { createLogger, format, transports } = require('winston'),
+    { combine, timestamp, printf, colorize } = format,
     fs = require('fs'),
-    env = process.env.NODE_ENV || 'development',
     logDir = 'log';
-    exports = module.exports = {};
-// Create the log directory if it does not exist
+
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
 }
-const tsFormat = () => (new Date()).toLocaleTimeString();
-exports.logger = winston.createLogger({
-  transports: [
-    // colorize the output to the console
-    new (winston.transports.Console)({
-      timestamp: tsFormat,
-      colorize: true,
-      level: 'info'
+
+const 
+    myFormat = printf(info => {
+        return `${info.timestamp} - [${info.level.toUpperCase()}] - ${info.message}`;
     }),
-    new (winston.transports.File)({
-      filename: `${logDir}/results.log`,
-      timestamp: tsFormat,
-      level: env === 'development' ? 'debug' : 'info'
-    })
-  ]
-});
-// logger.info('Hello world');
-// logger.warn('Warning message');
-// logger.debug('Debugging info');
+    logger = createLogger({
+        transports: [
+            new (transports.Console)({
+                format: combine(colorize(), myFormat),
+                level: 'debug'
+            }),
+            new (transports.File)({
+                filename: `${logDir}/log.log`,
+                format: combine(timestamp(),myFormat),
+                level: 'info'
+            })
+        ]
+    });
+
+module.exports = logger;
+
+logger.info('info logging');
+logger.debug('debug logging');
+logger.warn('warn logging');
