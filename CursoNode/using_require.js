@@ -1,4 +1,4 @@
 const
-    greet = require('./first-class_function.js');
+    greet = require('./first_class_function.js');
 
 greet();

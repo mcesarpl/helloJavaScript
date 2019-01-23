@@ -1,11 +1,11 @@
 //construction of a new object using function constructor
 
-function Person(firstname, lastname){
+let Person = function(firstname, lastname) {
 	
 	this.firstname = firstname;
 	this.lastname = lastname;
 
-}
+};
 
 let john = new Person('John', 'Doe');
 
@@ -30,3 +30,5 @@ jane.greet();
 //we can see the prototype functions (methods) add to this constructor (object) doing this :
 console.log(john.__proto__);
 console.log(jane.__proto__);
+
+//obs: do not use this call '.__proto__' in production code, just to test

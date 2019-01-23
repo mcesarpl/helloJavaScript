@@ -12,7 +12,7 @@ console.log(a);
 
 //note that a still has the value of 1
 
-//now, when variables passed is note a primitive, like a object, them the functions variable points to
+//now, when variables passed isn't a primitive, like a object, them the functions variable points to
 //the same memory address of the variable passed
 
 var c = {name:"Alex"};

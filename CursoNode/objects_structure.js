@@ -12,8 +12,8 @@ let person = {
 		}
 };
 
-//you can access a value in the object using to ways : a dot or a bracket
-//using a dot look like this above:
+//you can access a value in the object using two ways : a dot or a bracket
+//using a dot look like this above :
 
 person.greet();
 console.log('Name: ' + person.firstname);
