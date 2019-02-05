@@ -13,9 +13,13 @@ let fs = require('fs');
 //     console.log(JSON.parse(response.body));
 // });
 
-request4.post({url:'http://127.0.0.1:5001/games', form: {id:'111', name:'Campo Minado',year:'1950',rating:'6.0'}},(err,httpResponse,body)=>{
-    console.log(JSON.parse(httpResponse.body));
+request4.get('http://10.102.21.253:3000/models',(err,response)=>{
+    console.log(JSON.parse(response.body));
 });
+
+// request4.post({url:'http://127.0.0.1:5001/games', form: {id:'111', name:'Campo Minado',year:'1950',rating:'6.0'}},(err,httpResponse,body)=>{
+//     console.log(JSON.parse(httpResponse.body));
+// });
 
 // request4({ url:'http://localhost:5001/games/115', 
 //     method: 'PUT', 

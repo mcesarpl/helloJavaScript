@@ -13,6 +13,10 @@ let
 
 mongoose.connect('mongodb://localhost:27017/db_games',{ useNewUrlParser: true });
 
+mongoose.connection.once('connected', function() {
+    console.log("Connected to Database!")
+});
+
 let gameSchema = mongoose.Schema({
     id: Number,
     name : String,
@@ -62,7 +66,8 @@ let saveInBanc = (gameInfo,res)=>{ //recebe req.body
 router.get('/',(req,res)=>{
     Game.find((err, response)=>{
         if(err) {
-            console.log(err)
+            console.log('Error : ' + JSON.stringify(err));
+            console.log('Response : ' + JSON.stringify(response));
         } else {
             console.log("In GET : \n" + response);
             res.json(response);

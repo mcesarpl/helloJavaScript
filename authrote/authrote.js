@@ -17,7 +17,7 @@ let User = mongoose.model("User", userSchema);
 
 let saveInBanc = (userInfo,res)=>{ //recebe req.body
     if(!userInfo.username || !userInfo.password || !userInfo.grant_type){
-        res.json({message: "Sorry, you provided invalid username, password or granttype", type: "error"});
+        res.json({message: "Sorry, you provided invalid username, password or granttype.", type: "error"});
     }else{
         User.findOne({username : userInfo.username},(err,response)=>{
             if(err) {
@@ -42,7 +42,7 @@ let saveInBanc = (userInfo,res)=>{ //recebe req.body
                         }
                         else{
                             res.json({message: "New User added!", type: "success", user : userInfo});
-                            console.log("In POST : \nNew User added : " + userInfo.name);
+                            console.log("Entry in POST : \nNew User added : " + userInfo.name);
                         }   
                     });
                 }
@@ -67,7 +67,7 @@ router.get('/',(req,res)=>{
         if(err) {
             console.log(err)
         } else {
-            console.log("In GET : \n" + response);
+            console.log("Entry in GET : \n" + response);
             res.json(response);
         }
      });
